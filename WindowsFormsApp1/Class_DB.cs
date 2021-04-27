@@ -10,27 +10,19 @@ using Microsoft.Win32;
 namespace Class_DB
 {
 
-
     class Class_DB
     {
-
         #region 全局变量
         //定义一个SqlConnection类型的静态公共变量My_con，用于判断数据库是否连接
         public static SqlConnection My_con;
-        
         #endregion
 
-    
         #region 建立数据库连接
-
-        /// 建立数据库连接.
-        /// 返回SqlConnection对象
         public static SqlConnection Getcon()
         {
             string add = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Sqlcon", true).GetValue("add").ToString();
             string sa = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Sqlcon", true).GetValue("sa").ToString();
             string pwd = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Sqlcon", true).GetValue("pwd").ToString();
-
             string M_str_sqlcon = @"Data Source =" + add + "; Database=master;User id = " + sa + "; PWD=" + pwd;
             My_con = new SqlConnection(M_str_sqlcon); //用SqlConnection对象与指定的数据库相连接
             My_con.Open(); //打开数据库连接
@@ -39,8 +31,6 @@ namespace Class_DB
         #endregion
 
         #region 关闭数据库连接
- 
-        /// 关闭数据库的连接.
         public static void con_close()
         {
             if (My_con.State == ConnectionState.Open) //判断是否打开与数据库的连接
@@ -51,10 +41,7 @@ namespace Class_DB
         }
         #endregion
 
-        #region 读取指定表中的信息
-
-        /// 读取指定表中的信息.
-        ///
+        #region 执行SqlCommand命令返回Reader
         /// SQL语句 /// 返回bool型
         public static SqlDataReader getcom(string SQLstr)
         {
@@ -67,37 +54,26 @@ namespace Class_DB
         #endregion
 
         #region 执行SqlCommand命令
-        /// 执行SqlCommand
-        ///
-        /// SQL语句 
         public void getDataSet(string SQLstr)
         {
-        Getcon(); //打开与数据库的连接
-        SqlCommand SQLcom = new SqlCommand(SQLstr, My_con); //创建一个SqlCommand对象，用于执行SQL语句
-        SQLcom.ExecuteNonQuery(); //执行SQL语句
-        SQLcom.Dispose(); //释放所有空间
-        con_close(); //调用con_close()方法，关闭与数据库的连接
+            Getcon(); //打开与数据库的连接
+            SqlCommand SQLcom = new SqlCommand(SQLstr, My_con); //创建一个SqlCommand对象，用于执行SQL语句
+            SQLcom.ExecuteNonQuery(); //执行SQL语句
+            SQLcom.Dispose(); //释放所有空间
+            con_close(); //调用con_close()方法，关闭与数据库的连接
         }
         #endregion
 
         #region 创建DataSet对象
-        /// 创建一个DataSet对象
-        /// SQL语句
-        /// 表名
-        /// 返回DataSet对象
         public DataSet GetDataSet(string SQLstr)
-
         {
-        Getcon(); //打开与数据库的连接
-        SqlDataAdapter SQLda = new SqlDataAdapter(SQLstr, My_con); //创建一个SqlDataAdapter对象，并获取指定数据表的信息
-        DataSet My_DataSet = new DataSet(); //创建DataSet对象
-        SQLda.Fill(My_DataSet); //通过SqlDataAdapter对象的Fill()方法，将数据表信息添加到DataSet对象中
-        con_close(); //关闭数据库的连接
-        return My_DataSet; //返回DataSet对象的信息
-
-        //WritePrivateProfileString(string section, string key, string val, string filePath);
-    }
+            Getcon(); //打开与数据库的连接
+            SqlDataAdapter SQLda = new SqlDataAdapter(SQLstr, My_con); //创建一个SqlDataAdapter对象，并获取指定数据表的信息
+            DataSet My_DataSet = new DataSet(); //创建DataSet对象
+            SQLda.Fill(My_DataSet); //通过SqlDataAdapter对象的Fill()方法，将数据表信息添加到DataSet对象中
+            con_close(); //关闭数据库的连接
+            return My_DataSet; //返回DataSet对象的信息
+        }
         #endregion
-
-}
+    }
 }

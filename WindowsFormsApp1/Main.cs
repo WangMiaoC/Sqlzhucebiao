@@ -13,12 +13,14 @@ namespace WindowsFormsApp1
 {
     public partial class Main : Form
     {
-        Class_DB.Class_DB sql = new Class_DB.Class_DB();
+        //类声明
+        Class_DB.Class_DB sql = new Class_DB.Class_DB();   
 
         public Main()
         {
             InitializeComponent();
         }
+        //声明数据库连接参数
         public static SqlConnection My_con;
         private void button1_Click(object sender, EventArgs e)
         {

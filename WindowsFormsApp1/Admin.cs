@@ -18,19 +18,15 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-
-
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if(add.Text == "" || sa.Text == "" || pwd.Text == "")
             {
                 MessageBox.Show(@"服务器\SA\密码不可为空");
-
             }
             else
             {
@@ -44,11 +40,8 @@ namespace WindowsFormsApp1
                     regkeySetKey.SetValue("sa", sa.Text);
                     regkeySetKey.SetValue("pwd", pwd.Text);
                     conn.Close();
-                    new Main().Show();
+                    new Main().Show(); //验证成功显示主窗体
                     Hide();
-
-
-
                 }
 
                 catch (Exception ex)
@@ -58,17 +51,6 @@ namespace WindowsFormsApp1
             }
 
         }
-
-        private void Admin_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Admin_Activated(object sender, EventArgs e)
-        {
-         
-        }
-
         private void Admin_FormClosing(object sender, FormClosingEventArgs e)
         {
             Environment.Exit(0);
